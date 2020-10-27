@@ -1,0 +1,59 @@
+syntax = "proto2";
+message EHDR
+{
+	repeated uint32 e_ident = 1 [packed=true];
+	required uint32 e_type = 2;
+	required uint32 e_machine =3;
+	required uint32 e_entry = 4;
+	required uint32 e_phoff = 5; 
+	required uint32 e_shoff = 6; 
+	required uint32 e_flags= 7;
+	required uint32 e_ehsize = 8;
+	required uint32 e_phentsize =9 ;
+	required uint32 e_phnum =10;
+	required uint32 e_shentsize =11;
+	required uint32 e_shnum =12;
+	required uint32 e_shstrndx=13;
+}
+
+message phdr {
+	repeated uint32 p_type = 1 ;
+    required uint32 p_flags = 2;
+    required uint32 p_offset =3;
+	required uint32 p_vaddr = 4;
+    required uint32 p_addr = 5;
+    required uint32 filesz = 6;
+    required uint32 memsz = 7;
+	required uint32 align = 8;
+
+}
+
+message shdrs {
+	required uint32 sh_name      = 1;          
+	required uint32 sh_type      = 2;           /* [SHT_NULL] */
+	required uint32 sh_flags     = 3;          
+	required uint32 sh_addr      = 4;        
+	required uint32 sh_offset    = 5;           /* (bytes) */
+	required uint32 sh_size      = 6;           /* (bytes) */
+	required uint32 sh_link      = 7;          
+	required uint32 sh_info      = 8;          
+	required uint32 sh_addralign = 9;          
+	required uint32 sh_entsize   = 10;         
+}
+
+message d_un{
+	required uint32 d_val = 1;
+	required uint32 d_ptr = 2;
+}
+
+message dyns{
+	required uint32 d_tag = 1;
+	required d_un d_ptr = 2;
+}
+
+message elf{
+	required EHDR header=1;
+	repeated phdr phdrz=2;
+	repeated shdrs shader=3;
+	required dyns dynz=4;
+}
